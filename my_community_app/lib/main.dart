@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:my_community_app/screens/home_screen.dart';
-
-void main() => runApp(MyCommunityApp());
+import 'package:my_community_app/screens/login_screen.dart';
+import 'package:my_community_app/screens/register_screen.dart';
 
 class MyCommunityApp extends StatelessWidget {
   final routes = <String, WidgetBuilder>{
-    '/home-screen': (context) => HomeScreen(),
+    'home-screen': (context) => HomeScreen(),
+    'login-screen': (context) => LoginScreen(),
+    'register-screen': (context) => RegisterScreen(),
   };
 
   MaterialApp buildMaterialApp() {
