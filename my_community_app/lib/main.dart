@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_community_app/screens/home_screen.dart';
+import 'package:my_community_app/screens/home/home_screen.dart';
 import 'package:my_community_app/screens/login_screen.dart';
 import 'package:my_community_app/screens/register_screen.dart';
 
@@ -14,12 +14,8 @@ class MyCommunityApp extends StatelessWidget {
 
   MaterialApp buildMaterialApp() {
     return MaterialApp(
-      title: 'My community',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       routes: routes,
-      home: HomeScreen(title: 'Home Screen'),
+      home: HomeScreen(),
     );
   }
 
