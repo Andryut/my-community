@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_community_app/screens/home/home_screen.dart';
 import 'package:my_community_app/screens/login_screen.dart';
 import 'package:my_community_app/screens/register_screen.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 void main() => runApp(MyCommunityApp());
 
