@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'buttons.dart';
 import 'user_information.dart';
+/*
+class SettingsScreen extends StatefulWidget {
+  @override
+  _SettingsScreenState createState() => _SettingsScreenState();
+}
 
-class SettingsScreen extends StatelessWidget{
-
+class _SettingsScreenState extends State<SettingsScreen> {
+*/
+class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: topBar,
-      body: Container(
+      body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Container(
-              child: Center(
-                  child: profilePicture
-              ),
+              child: Center(child: profilePicture),
               margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
             ),
             Container(
@@ -37,12 +41,7 @@ class SettingsScreen extends StatelessWidget{
               margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
               child: Row(
                 children: <Widget>[
-                  Expanded(
-                      child: SizedBox(
-                          height: 60,
-                          child: setStatus
-                      )
-                  ),
+                  Expanded(child: SizedBox(height: 60, child: setStatus)),
                 ],
               ),
             ),
@@ -50,12 +49,7 @@ class SettingsScreen extends StatelessWidget{
               margin: EdgeInsets.fromLTRB(0, 1, 0, 0),
               child: Row(
                 children: <Widget>[
-                  Expanded(
-                      child: SizedBox(
-                          height: 60,
-                          child: activity
-                      )
-                  ),
+                  Expanded(child: SizedBox(height: 60, child: activity)),
                 ],
               ),
             ),
@@ -63,12 +57,7 @@ class SettingsScreen extends StatelessWidget{
               margin: EdgeInsets.fromLTRB(0, 1, 0, 0),
               child: Row(
                 children: <Widget>[
-                  Expanded(
-                      child: SizedBox(
-                          height: 60,
-                          child: myFiles
-                      )
-                  ),
+                  Expanded(child: SizedBox(height: 60, child: myFiles)),
                 ],
               ),
             ),
@@ -76,12 +65,7 @@ class SettingsScreen extends StatelessWidget{
               margin: EdgeInsets.fromLTRB(0, 1, 0, 0),
               child: Row(
                 children: <Widget>[
-                  Expanded(
-                      child: SizedBox(
-                          height: 60,
-                          child: changeMood
-                      )
-                  ),
+                  Expanded(child: SizedBox(height: 60, child: changeMood)),
                 ],
               ),
             ),
