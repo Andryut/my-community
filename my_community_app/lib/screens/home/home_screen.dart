@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'app_bodies/settings/settings_screen.dart';
+import 'events/events_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -13,7 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 2; //Navigation index selected
   final _widgetOptions = [ //App bodies
     Text('Index 0: Chats'),
-    Text('Index 1: Events'),
+    EventsScreen(),
     SettingsScreen(),
   ];
 
