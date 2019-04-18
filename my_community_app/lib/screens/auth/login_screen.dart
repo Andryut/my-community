@@ -190,7 +190,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: const EdgeInsets.only(
                           left: 20.0, right: 20.0, top: 30.0),
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          if(true) {
+                            Navigator.pushNamed(context, 'home-screen');
+                          }
+                        },
                         child: Container(
                           alignment: Alignment.center,
                           height: 60.0,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:my_community_app/screens/individual_chat_bar.dart';
-import 'package:my_community_app/screens/group_chat_bar.dart';
-import 'package:my_community_app/screens/chat_message.dart';
+import 'package:my_community_app/screens/chat/individual_chat_bar.dart';
+import 'package:my_community_app/screens/chat/group_chat_bar.dart';
+import 'package:my_community_app/screens/chat/chat_message.dart';
 import 'package:my_community_app/models/message.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 

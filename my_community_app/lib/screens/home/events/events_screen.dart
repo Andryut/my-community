@@ -13,7 +13,7 @@ class EventsScreen extends StatefulWidget {
 class _EventsScreenState extends State<EventsScreen> {
   Location location = new Location();
   LocationData userLocation;
-  int _markerIdCounter;
+  int _markerIdCounter = 0;
 
   var locationTitle = Text(
     'Your location says you are in',
@@ -31,7 +31,7 @@ class _EventsScreenState extends State<EventsScreen> {
       if (marker != null) {
         markers.remove(marker);
       }
-      _markerIdCounter++;
+      _markerIdCounter += 1;
       final MarkerId markerId = MarkerId('marker_id_$_markerIdCounter');
       marker = Marker(
         markerId: markerId,
