@@ -23,7 +23,6 @@ class MyCommunityApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*
     FirebaseAuth _auth = FirebaseAuth.instance;
     _auth.signInWithEmailAndPassword(
         email: 'taster@gmail.com', password: 'tasterpassword');
@@ -35,7 +34,6 @@ class MyCommunityApp extends StatelessWidget {
               .child(firebaseUser.uid)
               .set({'title': 'Realtime db rocks', 'created_at': 3});
         }).catchError((error) => print('\n\n' + error + '\n\n'));
-    */
     return buildMaterialApp();
   }
 }
