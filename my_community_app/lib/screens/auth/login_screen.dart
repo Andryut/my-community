@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key key}) : super(key: key);
@@ -12,10 +13,17 @@ class _LoginScreenState extends State<LoginScreen> {
   final _currentEmail = TextEditingController();
   final _currentPassword = TextEditingController();
   bool _isChecked = false;
+  String _inputState = "";
 
   void onChanged(bool value) {
     setState(() {
       _isChecked = value;
+    });
+  }
+
+  void _handleSignInError() {
+    setState(() {
+      _inputState = "can't login with the provided credentials";
     });
   }
 
@@ -34,6 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+              /*
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -87,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: 15.0,
               ),
-
+              
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -103,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
-
+              */
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
@@ -112,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   keyboardType: TextInputType.emailAddress,
                   autofocus: false,
                   decoration: InputDecoration(
-                    hintText: 'Email',
+                    hintText: 'email',
                     contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0)),
@@ -134,17 +143,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   autofocus: false,
                   obscureText: true,
                   decoration: InputDecoration(
-                    hintText: 'Password',
+                    hintText: 'password',
                     contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0)),
                   ),
                 ),
               ), //passwordField
-
+              /*
               SizedBox(
                 height: 15.0,
               ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -181,7 +191,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
-
+              */
+              Padding(
+                padding: const EdgeInsets.only(bottom: 18.0),
+                child: Text(
+                  _inputState,
+                  style: TextStyle(
+                    fontSize: 17.0,
+                    color: Colors.red,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -191,8 +212,25 @@ class _LoginScreenState extends State<LoginScreen> {
                           left: 20.0, right: 20.0, top: 30.0),
                       child: GestureDetector(
                         onTap: () {
-                          if(true) {
-                            Navigator.pushNamed(context, 'home-screen');
+                          if (_currentEmail.text != '' &&
+                              _currentEmail.text != '') {
+                            try {
+                              FirebaseAuth.instance
+                                  .signInWithEmailAndPassword(
+                                      email: _currentEmail.text,
+                                      password: _currentPassword.text)
+                                  .then((user) => Navigator.pushNamed(
+                                      context, 'home-screen'))
+                                  .catchError(() => _handleSignInError());
+                            } catch (error) {
+                              _handleSignInError();
+                            } finally {
+                              _handleSignInError();
+                            }
+                          } else {
+                            setState(() {
+                              _inputState = 'email and password needed';
+                            });
                           }
                         },
                         child: Container(
@@ -203,7 +241,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             borderRadius: BorderRadius.circular(20.0),
                           ),
                           child: Text(
-                            "Login",
+                            "login",
                             style:
                                 TextStyle(fontSize: 20.0, color: Colors.white),
                           ),
@@ -222,7 +260,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 18.0),
                       child: Text(
-                        "Already have an account?  ",
+                        "already have an account?  ",
                         style: TextStyle(
                             fontSize: 17.0,
                             color: Colors.grey,
@@ -237,7 +275,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 18.0),
                           child: Text(
-                            "Sign Up",
+                            "sign up",
                             style: TextStyle(
                                 fontSize: 17.0,
                                 color: Colors.blue[600],
