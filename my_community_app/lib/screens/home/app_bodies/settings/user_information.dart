@@ -9,6 +9,7 @@ final topBar = new AppBar(
         style: TextStyle(color: Colors.black),
       )
   ),
+  automaticallyImplyLeading: false,
 );
 var profilePicture = Icon(
   Icons.account_circle,
