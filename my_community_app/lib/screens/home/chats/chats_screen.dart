@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_community_app/screens/home/chats/people_card.dart';
 
 class ChatsScreen extends StatefulWidget {
   @override
@@ -23,6 +24,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
   Widget _buildSearch() {
     return Container(
+      padding: EdgeInsets.only(left: 20.0),
       child: Row(
         children: <Widget>[
           Flexible(
@@ -54,13 +56,20 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
   AppBar _buildAppBar() {
     AppBar bar = AppBar(
-      title: _buildSearch(),
-      bottom: TabBar(
-        tabs: [
-          _buildTabTitle('Message'),
-          _buildTabTitle('People'),
-        ],
-        indicatorColor: Colors.black,
+      bottom: PreferredSize(
+        preferredSize: Size.fromHeight(26.0),
+        child: Column(
+          children: <Widget>[
+            _buildSearch(),
+            TabBar(
+              tabs: [
+                _buildTabTitle('Message'),
+                _buildTabTitle('People'),
+              ],
+              indicatorColor: Colors.black,
+            )
+          ],
+        ),
       ),
       backgroundColor: Colors.transparent,
       elevation: 0.0,
@@ -70,7 +79,12 @@ class _ChatsScreenState extends State<ChatsScreen> {
   }
 
   Widget _buildChatsScreen() {
-    return Container();
+    return Column(
+      children: <Widget>[
+        PeopleCard(name: 'Johnny Depp'),
+        PeopleCard(name: 'Andryut Huertas'),
+      ],
+    );
   }
 
   Widget _buildPeopleScreen() {
