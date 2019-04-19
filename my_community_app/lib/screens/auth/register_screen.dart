@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class RegisterScreen extends StatefulWidget {
   RegisterScreen({Key key}) : super(key: key);
@@ -15,10 +17,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _currentPassword = TextEditingController();
   final _currentConfirmationPassword = TextEditingController();
   bool _isChecked = false;
+  String _inputState = '';
 
   void onChanged(bool value) {
     setState(() {
       _isChecked = value;
+    });
+  }
+
+  void _handleSignUpError() {
+    setState(() {
+      _currentName.clear();
+      _currentLastName.clear();
+      _currentEmail.clear();
+      _currentPassword.clear();
+      _currentConfirmationPassword.clear();
+      _inputState = "can't create user with the provided credentials";
     });
   }
 
@@ -37,6 +51,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            /*
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -104,7 +119,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ],
             ),
-
+            */
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
@@ -112,7 +127,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 controller: _currentName,
                 autofocus: false,
                 decoration: InputDecoration(
-                  hintText: 'Name',
+                  hintText: 'name',
                   contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0)),
@@ -133,7 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 controller: _currentLastName,
                 autofocus: false,
                 decoration: InputDecoration(
-                  hintText: 'Last Name',
+                  hintText: 'last name',
                   contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0)),
@@ -153,7 +168,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 keyboardType: TextInputType.emailAddress,
                 autofocus: false,
                 decoration: InputDecoration(
-                  hintText: 'Email',
+                  hintText: 'email',
                   contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0)),
@@ -175,7 +190,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 autofocus: false,
                 obscureText: true,
                 decoration: InputDecoration(
-                  hintText: 'Password',
+                  hintText: 'password',
                   contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0)),
@@ -197,7 +212,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 autofocus: false,
                 obscureText: true,
                 decoration: InputDecoration(
-                  hintText: 'Confirm Password',
+                  hintText: 'confirm password',
                   contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0)),
@@ -226,7 +241,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       top: 5.0,
                     ),
                     child: Text(
-                      "I agree with ",
+                      "accept ",
                       style: TextStyle(
                           fontSize: 17.0,
                           color: Colors.grey[600],
@@ -243,7 +258,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       // active privacy link
                     },
                     child: Text(
-                      "Private Policy",
+                      "privacy policy",
                       style: TextStyle(
                           fontSize: 17.0,
                           color: Colors.grey[500],
@@ -254,10 +269,62 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ],
             ),
             Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: Text(
+                _inputState,
+                style: TextStyle(
+                  fontSize: 17.0,
+                  color: Colors.red,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.only(
                   left: 20.0, right: 20.0, top: 30.0, bottom: 20.0),
               child: GestureDetector(
-                onTap: () => Navigator.pop(context),
+                onTap: () {
+                  if (_currentName.text != '' &&
+                      _currentLastName.text != '' &&
+                      _currentEmail.text != '' &&
+                      _currentPassword.text != '' &&
+                      _currentConfirmationPassword.text != '') {
+                    if (_currentPassword.text ==
+                        _currentConfirmationPassword.text) {
+                      if (_isChecked) {
+                        FirebaseAuth.instance
+                            .createUserWithEmailAndPassword(
+                                email: _currentEmail.text,
+                                password: _currentPassword.text)
+                            .then((user) {
+                          FirebaseDatabase.instance
+                              .reference()
+                              .child('users')
+                              .child(user.uid)
+                              .set({
+                            'displayName':
+                                _currentName.text + _currentLastName.text,
+                            'email': _currentEmail.text,
+                            'uid': user.uid,
+                          });
+                          Navigator.pushNamed(context, 'home-screen');
+                        }).catchError((error) => _handleSignUpError());
+                      } else {
+                        setState(() {
+                          _inputState = 'must agree the privacy policy';
+                        });
+                      }
+                    } else {
+                      setState(() {
+                        _inputState = 'bad password comfirmation';
+                      });
+                    }
+                  } else {
+                    setState(() {
+                      _inputState = 'all the fields are required';
+                    });
+                  }
+                },
                 child: Container(
                   alignment: Alignment.center,
                   height: 60.0,
@@ -266,7 +333,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   child: Text(
-                    "Sign Up",
+                    "sign up",
                     style: TextStyle(fontSize: 20.0, color: Colors.white),
                   ),
                 ),

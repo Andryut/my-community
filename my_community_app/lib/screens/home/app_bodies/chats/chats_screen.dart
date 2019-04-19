@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_community_app/screens/home/chats/people_card.dart';
+import 'package:my_community_app/screens/home/app_bodies/chats/people_card.dart';
 
 class ChatsScreen extends StatefulWidget {
   @override

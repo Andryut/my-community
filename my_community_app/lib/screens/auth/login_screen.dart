@@ -23,6 +23,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _handleSignInError() {
     setState(() {
+      _currentEmail.clear();
+      _currentPassword.clear();
       _inputState = "can't login with the provided credentials";
     });
   }
@@ -193,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               */
               Padding(
-                padding: const EdgeInsets.only(bottom: 18.0),
+                padding: const EdgeInsets.all(0.0),
                 child: Text(
                   _inputState,
                   style: TextStyle(
@@ -214,19 +216,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         onTap: () {
                           if (_currentEmail.text != '' &&
                               _currentEmail.text != '') {
-                            try {
-                              FirebaseAuth.instance
-                                  .signInWithEmailAndPassword(
-                                      email: _currentEmail.text,
-                                      password: _currentPassword.text)
-                                  .then((user) => Navigator.pushNamed(
-                                      context, 'home-screen'))
-                                  .catchError(() => _handleSignInError());
-                            } catch (error) {
-                              _handleSignInError();
-                            } finally {
-                              _handleSignInError();
-                            }
+                            FirebaseAuth.instance
+                                .signInWithEmailAndPassword(
+                                    email: _currentEmail.text,
+                                    password: _currentPassword.text)
+                                .then((user) =>
+                                    Navigator.pushNamed(context, 'home-screen'))
+                                .catchError(() => _handleSignInError());
                           } else {
                             setState(() {
                               _inputState = 'email and password needed';

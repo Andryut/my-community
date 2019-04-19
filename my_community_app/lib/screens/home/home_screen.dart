@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'app_bodies/settings/settings_screen.dart';
-import 'events/events_screen.dart';
-import 'chats/chats_screen.dart';
+import 'app_bodies/events/events_screen.dart';
+import 'app_bodies/chats/chats_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -11,12 +11,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 2; //Navigation index selected
+  int _selectedIndex = 0; //Navigation index selected
   final _widgetOptions = [
     //App bodies
-    ChatsScreen(),
+    ChatsScreen(), /*
     EventsScreen(),
-    SettingsScreen(),
+    SettingsScreen(),*/
   ];
 
   @override
@@ -29,26 +29,31 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              icon: Icon(
-                Icons.question_answer,
-                color: Colors.blue[800],
-              ),
-              title: Text('Chat')),
+            icon: Icon(
+              Icons.question_answer,
+              color: Colors.blue[800],
+            ),
+            title: Text('Chat'),
+          ),
+          /*
           BottomNavigationBarItem(
-              icon: Icon(
-                Icons.people,
-                color: Colors.blue[800],
-              ),
-              title: Text('Events')),
+            icon: Icon(
+              Icons.people,
+              color: Colors.blue[800],
+            ),
+            title: Text('Events'),
+          ),
           BottomNavigationBarItem(
-              icon: Icon(
-                Icons.settings,
-                color: Colors.blue[800],
-              ),
-              title: Text('Settings')),
+            icon: Icon(
+              Icons.settings,
+              color: Colors.blue[800],
+            ),
+            title: Text('Settings'),
+          ),
+          */
         ],
         currentIndex: _selectedIndex,
-        fixedColor: Colors.indigo,
+        fixedColor: Colors.blue,
         onTap: _onItemTapped,
       ),
     );
